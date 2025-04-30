@@ -1,0 +1,49 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}{{ page.title }} - {{ site_settings.site_title|default:"Twebs" }}{% endblock %}
+{% block meta_description %}{{ page.description|default:"" }}{% endblock %}
+{% block og_title %}{{ page.title }} - {{ site_settings.site_title|default:"Twebs" }}{% endblock %}
+{% block og_description %}{{ page.description|default:"" }}{% endblock %}
+
+{% block content %}
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>{{ page.title }}</h1>
+      {% if page.description %}
+        <p>{{ page.description }}</p>
+      {% endif %}
+    </div>
+  </section>
+  
+  <!-- Page Content -->
+  <section class="page-content">
+    <div class="container">
+      <div class="content-wrapper">
+        {% if page.image %}
+          <div class="page-image">
+            <img src="{{ page.image.url }}" alt="{{ page.title }}" class="img-fluid">
+          </div>
+        {% endif %}
+        
+        <div class="page-text">
+          {{ page.content|safe }}
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Call to Action -->
+  {% if page.show_contact_cta %}
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>{{ page.cta_title|default:"Need More Information?" }}</h2>
+          <p>{{ page.cta_text|default:"Our team is ready to answer any questions you may have about our products and services." }}</p>
+          <a href="{% url 'website:contact' %}" class="btn btn-primary">{{ page.cta_button_text|default:"Contact Us" }}</a>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}{{ site_settings.site_title|default:"Twebs" }} - Home{% endblock %}
+
+{% block content %}
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Twebs: Advancing Science with Precision & Innovation.</h1>
+        
+        <p>From <strong>Air Filter Testing</strong> and <strong>Mask Evaluation</strong> to <strong>Dust Sensor Calibration</strong> and <strong>Air Quality Monitoring</strong>, Twebs delivers cutting-edge solutions for accurate and reliable testing.</p>
+        
+        <a href="{% url 'website:products' %}" class="btn btn-primary">Find out more</a>
+      </div>
+      
+      <div class="hero-image">
+        <img src="{% static 'website/img/scientist.jpg' %}" alt="Laboratory Scientist" class="img-fluid">
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services">
+    <div class="container">
+      <div class="section-header text-center">
+        <h2>Our Services</h2>
+        <p>Comprehensive laboratory and scientific instrumentation services</p>
+      </div>
+      
+      <div class="service-cards">
+        {% for service in services %}
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="{{ service.icon }}"></i>
+          </div>
+          <h3>{{ service.title }}</h3>
+          <p>{{ service.description }}</p>
+          <a href="#" class="service-link">Learn more <i class="fas fa-arrow-right"></i></a>
+        </div>
+        {% empty %}
+        <!-- Default services if none in database -->
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-flask"></i>
+          </div>
+          <h3>Air Filter Testing</h3>
+          <p>Comprehensive testing of air filtration systems for efficiency and performance.</p>
+          <a href="#" class="service-link">Learn more <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-microscope"></i>
+          </div>
+          <h3>Mask Evaluation</h3>
+          <p>Rigorous evaluation of respiratory protection masks for safety compliance.</p>
+          <a href="#" class="service-link">Learn more <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-vial"></i>
+          </div>
+          <h3>Dust Sensor Calibration</h3>
+          <p>Precise calibration of dust sensors for accurate environmental monitoring.</p>
+          <a href="#" class="service-link">Learn more <i class="fas fa-arrow-right"></i></a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <section class="why-us">
+    <div class="container">
+      <div class="section-header text-center">
+        <h2>Why Choose Twebs</h2>
+        <p>What sets us apart from the competition</p>
+      </div>
+      
+      <div class="value-props">
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-certificate"></i>
+          </div>
+          <h3>ISO Certified</h3>
+          <p>All our testing procedures and equipment meet ISO standards for quality and reliability.</p>
+        </div>
+        
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3>Expert Team</h3>
+          <p>Our team of scientists and engineers bring decades of combined experience.</p>
+        </div>
+        
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-cogs"></i>
+          </div>
+          <h3>Advanced Equipment</h3>
+          <p>State-of-the-art laboratory equipment for precise and reliable results.</p>
+        </div>
+        
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-headset"></i>
+          </div>
+          <h3>Dedicated Support</h3>
+          <p>Ongoing technical support and maintenance for all our products and services.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta">
+    <div class="container text-center">
+      <h2>Ready to advance your research?</h2>
+      <p>Contact us today to discuss your laboratory equipment needs and how we can support your scientific endeavors.</p>
+      <div class="cta-buttons">
+        <a href="{% url 'website:contact' %}" class="btn btn-light">Contact Us</a>
+        <a href="{% url 'website:products' %}" class="btn btn-outline">View Products</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}Products - {{ site_settings.site_title|default:"Twebs" }}{% endblock %}
+{% block meta_description %}Browse our complete range of laboratory equipment and scientific instruments{% endblock %}
+{% block og_title %}Products - {{ site_settings.site_title|default:"Twebs" }}{% endblock %}
+{% block og_description %}Browse our complete range of laboratory equipment and scientific instruments{% endblock %}
+
+{% block content %}
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>Our Products</h1>
+      {% if category %}
+        <p>Category: {{ category.name }}</p>
+      {% else %}
+        <p>Browse our complete range of laboratory equipment and scientific instruments</p>
+      {% endif %}
+    </div>
+  </section>
+  
+  <!-- Product Categories -->
+  <section class="product-categories">
+    <div class="container">
+      <div class="category-nav">
+        <a href="{% url 'website:products' %}" class="category-link {% if not category %}active{% endif %}">All Products</a>
+        {% for cat in product_categories %}
+          <a href="{% url 'website:product_category' cat.slug %}" class="category-link {% if category.slug == cat.slug %}active{% endif %}">{{ cat.name }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Products Grid -->
+  <section class="products-grid">
+    <div class="container">
+      {% if products %}
+        <div class="products-container">
+          {% for product in products %}
+            <div class="product-card">
+              {% if product.image %}
+                <div class="product-image">
+                  <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                </div>
+              {% else %}
+                <div class="product-image placeholder">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2H3v16h18V2z"></path><path d="M21 15H3"></path><path d="M7 2v13"></path></svg>
+                </div>
+              {% endif %}
+              <div class="product-info">
+                <p class="product-category">{{ product.category.name }}</p>
+                <h3>{{ product.name }}</h3>
+                <div class="product-description">
+                  {{ product.description|truncatewords:15 }}
+                </div>
+                <a href="{% url 'website:product_detail' product.slug %}" class="btn btn-primary btn-sm">View Details</a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <!-- Default Products if none in database -->
+        <div class="products-container">
+          <div class="product-card">
+            <div class="product-image placeholder">
+              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2H3v16h18V2z"></path><path d="M21 15H3"></path><path d="M7 2v13"></path></svg>
+            </div>
+            <div class="product-info">
+              <p class="product-category">Air Filter Systems</p>
+              <h3>Air Filter Testing System</h3>
+              <div class="product-description">
+                Advanced system for testing air filters with precise measurements and detailed analytics.
+              </div>
+              <a href="#" class="btn btn-primary btn-sm">View Details</a>
+            </div>
+          </div>
+          
+          <div class="product-card">
+            <div class="product-image placeholder">
+              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2H3v16h18V2z"></path><path d="M21 15H3"></path><path d="M7 2v13"></path></svg>
+            </div>
+            <div class="product-info">
+              <p class="product-category">Mask Systems</p>
+              <h3>Mask Evaluation System</h3>
+              <div class="product-description">
+                Comprehensive mask testing equipment for evaluating filtration efficiency and breathability.
+              </div>
+              <a href="#" class="btn btn-primary btn-sm">View Details</a>
+            </div>
+          </div>
+          
+          <div class="product-card">
+            <div class="product-image placeholder">
+              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2H3v16h18V2z"></path><path d="M21 15H3"></path><path d="M7 2v13"></path></svg>
+            </div>
+            <div class="product-info">
+              <p class="product-category">Dust Sensor Systems</p>
+              <h3>Dust Sensor Calibration Kit</h3>
+              <div class="product-description">
+                Precision calibration equipment for dust sensors with reference standards and software.
+              </div>
+              <a href="#" class="btn btn-primary btn-sm">View Details</a>
+            </div>
+          </div>
+          
+          <div class="product-card">
+            <div class="product-image placeholder">
+              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2H3v16h18V2z"></path><path d="M21 15H3"></path><path d="M7 2v13"></path></svg>
+            </div>
+            <div class="product-info">
+              <p class="product-category">Generators</p>
+              <h3>Aerosol Generator</h3>
+              <div class="product-description">
+                High-output aerosol generator for creating controlled test environments.
+              </div>
+              <a href="#" class="btn btn-primary btn-sm">View Details</a>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

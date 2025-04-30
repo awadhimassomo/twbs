@@ -1,0 +1,114 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} - {{ site_settings.site_title|default:"Twebs" }}{% endblock %}
+{% block meta_description %}{{ product.description|truncatewords:30 }}{% endblock %}
+{% block og_title %}{{ product.name }} - {{ site_settings.site_title|default:"Twebs" }}{% endblock %}
+{% block og_description %}{{ product.description|truncatewords:30 }}{% endblock %}
+
+{% block content %}
+  <!-- Product Detail -->
+  <section class="product-detail">
+    <div class="container">
+      <div class="breadcrumbs">
+        <a href="{% url 'website:home' %}">Home</a> &gt;
+        <a href="{% url 'website:products' %}">Products</a> &gt;
+        <a href="{% url 'website:product_category' product.category.slug %}">{{ product.category.name }}</a> &gt;
+        <span>{{ product.name }}</span>
+      </div>
+      
+      <div class="product-detail-container">
+        <div class="product-media">
+          {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-detail-image">
+          {% else %}
+            <div class="product-image-placeholder">
+              <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2H3v16h18V2z"></path><path d="M21 15H3"></path><path d="M7 2v13"></path></svg>
+              <p>No image available</p>
+            </div>
+          {% endif %}
+        </div>
+        
+        <div class="product-info">
+          <h1>{{ product.name }}</h1>
+          <p class="product-category">Category: {{ product.category.name }}</p>
+          
+          <div class="product-description">
+            <h2>Description</h2>
+            <div class="description-content">
+              {{ product.description|linebreaks }}
+            </div>
+          </div>
+          
+          {% if features %}
+            <div class="product-features">
+              <h2>Features</h2>
+              <ul class="features-list">
+                {% for feature in features %}
+                  <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    {{ feature }}
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+          
+          {% if specifications %}
+            <div class="product-specs">
+              <h2>Specifications</h2>
+              <table class="specs-table">
+                <tbody>
+                  {% for key, value in specifications.items %}
+                    <tr>
+                      <th>{{ key }}</th>
+                      <td>{{ value }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% endif %}
+          
+          <div class="product-cta">
+            <a href="{% url 'website:contact' %}" class="btn btn-primary">Request Quote</a>
+            <a href="javascript:history.back()" class="btn btn-secondary">Back to Products</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Related Products -->
+  <section class="related-products">
+    <div class="container">
+      <h2>Related Products</h2>
+      
+      <div class="related-products-container">
+        {% for related_product in related_products|slice:":3" %}
+          <div class="product-card">
+            {% if related_product.image %}
+              <div class="product-image">
+                <img src="{{ related_product.image.url }}" alt="{{ related_product.name }}">
+              </div>
+            {% else %}
+              <div class="product-image placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2H3v16h18V2z"></path><path d="M21 15H3"></path><path d="M7 2v13"></path></svg>
+              </div>
+            {% endif %}
+            <div class="product-info">
+              <h3>{{ related_product.name }}</h3>
+              <p class="product-category">{{ related_product.category.name }}</p>
+              <div class="product-description">
+                {{ related_product.description|truncatewords:10 }}
+              </div>
+              <a href="{% url 'website:product_detail' related_product.slug %}" class="btn btn-primary btn-sm">View Details</a>
+            </div>
+          </div>
+        {% empty %}
+          <p>No related products found.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}

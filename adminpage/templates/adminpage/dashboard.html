@@ -1,0 +1,153 @@
+{% extends "adminpage/base.html" %}
+
+{% block title %}Dashboard | Twebs Admin{% endblock %}
+
+{% block content %}
+<h1 class="h2 mb-4">Dashboard</h1>
+
+<div class="row">
+  <!-- Statistics Cards -->
+  <div class="col-md-3 mb-4">
+    <div class="card dashboard-card border-primary">
+      <div class="card-body text-center">
+        <h5 class="card-title">Products</h5>
+        <p class="display-4">{{ products_count }}</p>
+        <a href="{% url 'adminpage:products' %}" class="btn btn-sm btn-primary">Manage Products</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-3 mb-4">
+    <div class="card dashboard-card border-success">
+      <div class="card-body text-center">
+        <h5 class="card-title">Categories</h5>
+        <p class="display-4">{{ categories_count }}</p>
+        <a href="{% url 'adminpage:categories' %}" class="btn btn-sm btn-success">Manage Categories</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-3 mb-4">
+    <div class="card dashboard-card border-info">
+      <div class="card-body text-center">
+        <h5 class="card-title">Testimonials</h5>
+        <p class="display-4">{{ testimonials_count }}</p>
+        <a href="{% url 'adminpage:testimonials' %}" class="btn btn-sm btn-info text-white">Manage Testimonials</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-3 mb-4">
+    <div class="card dashboard-card border-warning">
+      <div class="card-body text-center">
+        <h5 class="card-title">Inquiries</h5>
+        <p class="display-4">{{ inquiries_count }}</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="badge bg-danger">{{ unread_inquiries }} Unread</span>
+          <a href="{% url 'adminpage:inquiries' %}" class="btn btn-sm btn-warning">View All</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Website Info and Quick Links -->
+<div class="row mb-4">
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">Site Information</h5>
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <strong>Website Name:</strong>
+          <span id="site-name">Twebs Tanzania</span>
+        </div>
+        <div class="mb-3">
+          <strong>Contact Email:</strong>
+          <span id="site-email">info@twebs.co.tz</span>
+        </div>
+        <div class="mb-3">
+          <strong>Phone Number:</strong>
+          <span id="site-phone">+255 123 456 789</span>
+        </div>
+        <a href="{% url 'adminpage:settings' %}" class="btn btn-primary">Edit Site Settings</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">Quick Actions</h5>
+      </div>
+      <div class="card-body">
+        <div class="list-group">
+          <a href="{% url 'adminpage:add_product' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-plus-circle me-2"></i> Add New Product
+          </a>
+          <a href="{% url 'adminpage:add_category' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-folder-plus me-2"></i> Add New Category
+          </a>
+          <a href="{% url 'adminpage:add_testimonial' %}" class="list-group-item list-group-item-action">
+            <i class="fas fa-comment-medical me-2"></i> Add New Testimonial
+          </a>
+          <a href="{% url 'adminpage:inquiries' %}?status=unread" class="list-group-item list-group-item-action">
+            <i class="fas fa-envelope-open-text me-2"></i> View Unread Messages
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Inquiries -->
+<div class="card mb-4">
+  <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Recent Inquiries</h5>
+    <a href="{% url 'adminpage:inquiries' %}" class="btn btn-sm btn-outline-light">View All</a>
+  </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for inquiry in latest_inquiries %}
+          <tr>
+            <td>{{ inquiry.name }}</td>
+            <td>{{ inquiry.email }}</td>
+            <td>{{ inquiry.subject }}</td>
+            <td>{{ inquiry.date_submitted|date:"M d, Y" }}</td>
+            <td>
+              {% if inquiry.is_read %}
+                <span class="badge bg-success">Read</span>
+              {% else %}
+                <span class="badge bg-danger">Unread</span>
+              {% endif %}
+            </td>
+            <td>
+              <a href="{% url 'adminpage:view_inquiry' inquiry.id %}" class="btn btn-sm btn-primary">
+                <i class="fas fa-eye"></i>
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="text-center py-3">No inquiries found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

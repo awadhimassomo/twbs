@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Twebs - Laboratory Equipment{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Leading supplier of laboratory and scientific instrumentation in Southern Africa{% endblock %}" />
+    <meta name="author" content="Twebs" />
+
+    <meta property="og:title" content="{% block og_title %}Twebs{% endblock %}" />
+    <meta property="og:description" content="{% block og_description %}Leading supplier of laboratory and scientific instrumentation in Southern Africa{% endblock %}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="{% static 'website/img/logo.png' %}" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@twebs" />
+    <meta name="twitter:image" content="{% static 'website/img/logo.png' %}" />
+    
+    <link rel="stylesheet" href="{% static 'website/css/style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    {% block extra_css %}{% endblock %}
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <header class="navbar">
+      <div class="container">
+        <a href="{% url 'website:home' %}" class="logo">
+          <img src="{% static 'website/img/logo.png' %}" alt="{{ site_settings.site_title|default:'Twebs' }} Logo" class="logo-img" width="150" height="50">
+        </a>
+        
+        <div class="menu-toggle" id="mobile-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        
+        <nav class="nav-menu">
+          <a href="{% url 'website:home' %}" class="nav-link {% if request.path == '/' %}active{% endif %}">Home</a>
+          
+          <div class="dropdown">
+            <button class="dropdown-btn">Products <i class="fas fa-chevron-down"></i></button>
+            <div class="dropdown-content">
+              {% for category in product_categories %}
+                <a href="{% url 'website:products' %}#{{ category.slug }}">{{ category.name }}</a>
+              {% empty %}
+                <a href="{% url 'website:products' %}">All Products</a>
+              {% endfor %}
+            </div>
+          </div>
+          
+          {% if applications_enabled %}
+          <div class="dropdown">
+            <button class="dropdown-btn">Applications <i class="fas fa-chevron-down"></i></button>
+            <div class="dropdown-content">
+              {% for app in application_categories %}
+                <a href="{{ app.url }}">{{ app.name }}</a>
+              {% empty %}
+                <a href="#">Materials Testing</a>
+                <a href="#">Microscopy</a>
+                <a href="#">Spectroscopy</a>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+          
+          <a href="{% url 'website:about' %}" class="nav-link {% if 'about' in request.path %}active{% endif %}">About us</a>
+          <a href="{% url 'website:contact' %}" class="nav-link {% if 'contact' in request.path %}active{% endif %}">Contact</a>
+          <a href="{% url 'adminpage:login' %}" class="nav-link {% if 'login' in request.path %}active{% endif %}">Login</a>
+        </nav>
+      </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <h3>Contact</h3>
+            <ul class="contact-info">
+              <li><strong>Address:</strong> P.O.Box 15968, Usa River, Arusha, Tanzania</li>
+              <li><strong>Email:</strong> <a href="mailto:info@twebs.co.tz">info@twebs.co.tz</a></li>
+              <li><strong>Phone:</strong> +255 123 456 789</li>
+            </ul>
+          </div>
+          
+          <div class="footer-column">
+            <h3>Products</h3>
+            <ul class="footer-links">
+              {% for category in product_categories %}
+                <li><a href="{% url 'website:product_category' category.slug %}">{{ category.name }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+          
+          <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+              <li><a href="{% url 'website:home' %}">Home</a></li>
+              <li><a href="{% url 'website:products' %}">Products</a></li>
+              <li><a href="{% url 'website:about' %}">About Us</a></li>
+              <li><a href="{% url 'website:contact' %}">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>{{ site_settings.footer_text|default:"&copy; Twebs 2025. All Rights Reserved." }}</p>
+        </div>
+      </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        mobileMenuToggle.addEventListener('click', function() {
+          this.classList.toggle('active');
+          navMenu.classList.toggle('active');
+        });
+        
+        // Dropdown menus on mobile
+        if (window.innerWidth <= 768) {
+          const dropdownBtns = document.querySelectorAll('.dropdown-btn');
+          
+          dropdownBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+              e.preventDefault();
+              const dropdownContent = this.nextElementSibling;
+              dropdownContent.classList.toggle('show');
+            });
+          });
+        }
+        
+        // Scroll to top button
+        const scrollToTopBtn = document.querySelector('.scroll-to-top');
+        
+        if (scrollToTopBtn) {
+          window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+              scrollToTopBtn.classList.add('show');
+            } else {
+              scrollToTopBtn.classList.remove('show');
+            }
+          });
+          
+          scrollToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
+          });
+        }
+      });
+    </script>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

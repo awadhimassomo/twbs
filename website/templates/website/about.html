@@ -1,0 +1,115 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}About Us - {{ site_settings.site_title|default:"Twebs" }}{% endblock %}
+{% block meta_description %}Learn about Twebs - a leading supplier of laboratory and scientific instrumentation in Tanzania{% endblock %}
+{% block og_title %}About Us - {{ site_settings.site_title|default:"Twebs" }}{% endblock %}
+{% block og_description %}Discover our story, mission, and values at Twebs{% endblock %}
+
+{% block content %}
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>About Us</h1>
+      <p>Learn about our company, mission and values</p>
+    </div>
+  </section>
+  
+  <!-- Company Overview -->
+  <section class="about-section">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-content">
+          <h2>Our Story</h2>
+          <p>Twebs is a leading supplier of laboratory and scientific instrumentation in Tanzania. Established with a mission to provide high-quality laboratory equipment to research institutions, universities, hospitals, and industries across Tanzania.</p>
+          
+          <p>Since our founding, we've been committed to delivering superior products, exceptional customer service, and technical expertise to our clients. Our team of specialists understands the unique challenges faced by laboratories in Tanzania and works closely with customers to provide tailored solutions.</p>
+          
+          <h2>Our Mission</h2>
+          <p>To enhance scientific progress in Tanzania by providing reliable, high-quality laboratory equipment and technical support, enabling researchers and professionals to pursue excellence in their work.</p>
+          
+          <h2>Our Values</h2>
+          <ul class="values-list">
+            <li>
+              <strong>Quality:</strong> We are committed to providing only the highest quality products that meet international standards.
+            </li>
+            <li>
+              <strong>Integrity:</strong> We conduct our business with honesty, transparency, and ethical practices.
+            </li>
+            <li>
+              <strong>Customer Focus:</strong> We prioritize understanding and meeting our customers' needs through personalized service.
+            </li>
+            <li>
+              <strong>Innovation:</strong> We continuously seek new technologies and solutions to address evolving laboratory needs.
+            </li>
+            <li>
+              <strong>Local Expertise:</strong> We combine global knowledge with local understanding to provide relevant solutions for Tanzania.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Team Section -->
+  <section class="team-section">
+    <div class="container">
+      <h2 class="section-title">Our Leadership Team</h2>
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="member-photo">
+            <div class="photo-placeholder">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+          </div>
+          <h3>Yusufu Abeid Chande Jande</h3>
+          <p class="member-bio">Leading our company with extensive experience in laboratory equipment solutions for Tanzania's growing research sector.</p>
+        </div>
+        
+        <div class="team-member">
+          <div class="member-photo">
+            <div class="photo-placeholder">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+          </div>
+          <h3>Hans Komakech</h3>
+          <p class="member-bio">Expert in laboratory systems with specialized knowledge in air filtration and quality monitoring technologies.</p>
+        </div>
+        
+        <div class="team-member">
+          <div class="member-photo">
+            <div class="photo-placeholder">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+          </div>
+          <h3>David Kavishe</h3>
+          <p class="member-bio">Oversees our logistics and service delivery to ensure timely installation and maintenance of laboratory equipment.</p>
+        </div>
+        
+        <div class="team-member">
+          <div class="member-photo">
+            <div class="photo-placeholder">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+          </div>
+          <h3>Gloria Jesse</h3>
+          <p class="member-bio">Dedicated to ensuring our clients receive exceptional service and technical support for all their laboratory needs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Call to Action -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Let's Equip Your Laboratory for Success</h2>
+        <p>Whether you need air filtration systems, testing equipment, or complete laboratory solutions, our team is ready to provide expert consultation tailored to your specific requirements in Tanzania.</p>
+        <div class="cta-buttons">
+          <a href="{% url 'website:contact' %}" class="btn btn-primary">Request a Consultation</a>
+          <a href="{% url 'website:products' %}" class="btn btn-outline">Explore Our Products</a>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

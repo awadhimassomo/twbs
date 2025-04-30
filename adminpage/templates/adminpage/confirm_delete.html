@@ -1,0 +1,37 @@
+{% extends "adminpage/base.html" %}
+
+{% block title %}{{ title }} | Twebs Admin{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h2">{{ title }}</h1>
+  <a href="{% url cancel_url %}" class="btn btn-secondary">
+    <i class="fas fa-arrow-left me-1"></i> Cancel
+  </a>
+</div>
+
+<div class="card">
+  <div class="card-header bg-danger text-white">
+    <h5 class="mb-0">Confirm Deletion</h5>
+  </div>
+  <div class="card-body">
+    <p class="lead">Are you sure you want to delete the following item?</p>
+    <div class="alert alert-warning">
+      <p class="mb-0"><strong>{{ object }}</strong></p>
+    </div>
+    <p>This action cannot be undone.</p>
+    
+    <form method="post">
+      {% csrf_token %}
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="{% url cancel_url %}" class="btn btn-secondary me-md-2">
+          <i class="fas fa-times me-1"></i> Cancel
+        </a>
+        <button type="submit" class="btn btn-danger">
+          <i class="fas fa-trash-alt me-1"></i> Delete
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
